@@ -71,7 +71,7 @@ def to_cumulative_delayed():
 			counter += 1
 			if (counter) == quantity_block:
 				curr = Timestamps[ticks][i]
-				result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter, cumSum)))
+				result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter + result[-1][2], cumSum + result[-1][3])))
 				break
 	return jsonify({"output" : result})
 	raise Exception
