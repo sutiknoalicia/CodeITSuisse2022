@@ -1,10 +1,11 @@
-import logging
-import json
-
-from flask import request, jsonify
+from flask import Flask, jsonify, request
 from codeitsuisse import app
+import json
+import logging
 
 logger = logging.getLogger(__name__)
+
+from datetime import  datetime
 
 class Ticker:
 	def __init__(self, *args):
@@ -45,7 +46,7 @@ def to_cumulative():
 		tickers.sort()
 		for ticker in tickers:
 			result[-1] += f",{ticker.ticker},{ticker.quantity},{ticker.price}"
-	return jsonify({"output" : result})
+	return jsonify({"output" : *result})
 	raise Exception
 
 @app.route("/tickerStreamPart2", methods=['GET', 'POST'])
@@ -72,6 +73,6 @@ def to_cumulative_delayed():
 				curr = Timestamps[ticks][i]
 				result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter, cumSum)))
 				break
-	return jsonify({"output" : result})
+	return jsonify({"output" : *result})
 	raise Exception
 
