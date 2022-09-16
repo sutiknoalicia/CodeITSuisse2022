@@ -30,7 +30,7 @@ class Ticker:
 			return self.ticker < other.ticker
 		return self.timestamp < other.timestamp
 
-@app.route("/tickerStreamPart1", methods=['POST'])
+@app.route("/tickerStreamPart1", methods=['GET', 'POST'])
 def to_cumulative():
 	stream = json.loads(request.data)
 	Timestamps = {}
@@ -49,7 +49,7 @@ def to_cumulative():
 			result[-1] += f",{ticker.ticker},{ticker.quantity},{ticker.price}"
 	return jsonify({"output" : result})
 
-@app.route("/tickerStreamPart2", methods=['POST'])
+@app.route("/tickerStreamPart2", methods=['GET', 'POST'])
 def to_cumulative_delayed():
 	stream = request.args.get("stream")
 	quantity_block = request.args.get("quantityBlock")
