@@ -6,74 +6,67 @@ from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
 
-from datetime import  datetime
-
-class Ticker:
-	def __init__(self, *args):
-		self.timestamp = datetime.strptime(args[0], '%H:%M')
-		self.ticker = args[1]
-		self.quantity = int(args[2])
-		self.price = float(args[3])
-		self.strTime = str(self.timestamp.time())[0:5]
-
-	def evaluatePriceSingle(self):
-		self.price = self.quantity * self.price
-
-	def seperateIntoQuantity(self):
-		return [Ticker(self.strTime, self.ticker, 1, self.price) for i in range(self.quantity)]
-
-	def __repr__(self):
-		return f"{self.strTime},{self.ticker},{self.quantity},{self.price}"
-
-	def __lt__(self, other):
-		if self.timestamp == other.timestamp:
-			return self.ticker < other.ticker
-		return self.timestamp < other.timestamp
-
 @app.route("/tickerStreamPart1", methods=['GET', 'POST'])
 def to_cumulative():
-	stream = json.loads(request.data)["stream"]
-	Timestamps = {}
-	result = []
-	for tick in stream:
-		temp = Ticker(*tick.split(","))
-		temp.evaluatePriceSingle()
-		if temp.timestamp in Timestamps.keys():
-			Timestamps[temp.timestamp] += [temp]
-		else:
-			Timestamps[temp.timestamp] = [temp]
-	for key, tickers in Timestamps.items():
-		result.append(str(key.time())[0:5])
-		tickers.sort()
-		for ticker in tickers:
-			result[-1] += f",{ticker.ticker},{ticker.quantity},{ticker.price}"
-	return jsonify({"output" : result})
-	raise Exception
+  stream = json.loads(request.data)["stream"]
+  streamSL = [] #stores the strings inside a list
+  timestamp = [] #stores the different timestamps
+  streamFNL = [] #stores the return value
+
+  #finds cumulative_notional for each timestamp (input value)
+  for i in range(len(stream)):
+    #streamL: converts the str into list
+    streamL = stream[i].split(',')
+    timestamp.append(streamL[0])
+    cumulative_notional = str(float(streamL[2])*float(streamL[3]))
+    streamL[3] = cumulative_notional
+    #streamS: converts list into str
+    streamS = ",".join(streamL)
+    streamSL.append(streamS)
+
+  #list storing all different timestamps (no repeating)
+  timestamp = sorted(list(set(timestamp)))
+
+  #combines the same tumestamps into 1 string
+  for i in range(len(timestamp)):
+    group = [] #stores the ticker, quantity, notion for a certain timestamp
+    for j in streamSL:
+      if timestamp[i] == j[0:5]:
+        group.append(j[6:])
+    group = sorted(group,key=lambda ticker:ticker[0])
+    #sorts the ticker, quantity,notion by ticker
+    group = ",".join(group)
+    streamFNL.append(timestamp[i]+","+group)
+    
+  return jsonify({"output" : streamFNL})
 
 @app.route("/tickerStreamPart2", methods=['GET', 'POST'])
 def to_cumulative_delayed():
-	stream = request.args.get("stream")
-	quantity_block = request.args.get("quantityBlock")
-	Timestamps = {}
-	result = []
-	for tick in stream:
-		temp = Ticker(*tick.split(","))
-		key = temp.ticker
-		if key in Timestamps.keys():
-			Timestamps[key] += temp.seperateIntoQuantity()
-		else:
-			Timestamps[key] = temp.seperateIntoQuantity()
-	for ticks in Timestamps.keys():
-		Timestamps[ticks].sort()
-		cumSum = 0
-		counter = 0
-		for i in range(0, len(Timestamps[ticks])):
-			cumSum += Timestamps[ticks][i].price
-			counter += 1
-			if (counter) == quantity_block:
-				curr = Timestamps[ticks][i]
-				result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter, cumSum)))
-				break
-	return jsonify({"output" : result})
-	raise Exception
+  stream = request.args.get("stream")
+  quantity_block = request.args.get("quantityBlock")
+  ticker = []
+  streamFNL = []
+  streamL = []
+  stream = sorted(stream) #ensures timestamp is arranged chronologically
 
+  #identifies the different tickers
+  for i in range(len(stream)):
+    streamL = stream[i].split(',')
+    ticker.append(streamL[1])
+  ticker = sorted(list(set(ticker)))
+
+  for i in ticker: #will go through the stream for each different ticker
+    cumulative_quantity, cumulative_notional = 0, float(0)
+    for j in range(len(stream)):
+      streamL = stream[j].split(',')
+      if i == streamL[1]:
+        #adds notional and quantity depending on the quantity of the stream
+        for k in range(int(streamL[2])): 
+          cumulative_quantity += 1
+          cumulative_notional += float(streamL[3])
+          if int(cumulative_quantity) == quantity_block:
+            streamFNL.append(streamL[0]+","+i+","+str(cumulative_quantity)+","+str(cumulative_notional))
+            break
+  
+  streamFNL = sorted(streamFNL)
+  return jsonify({"output" : streamFNL}) #returns sorted stream where timestamps are in chronological order
