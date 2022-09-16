@@ -74,6 +74,3 @@ def to_cumulative_delayed():
 				result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter, cumSum)))
 				break
 	return jsonify({"output" : result})
-
-
-app.run(debug=True)
