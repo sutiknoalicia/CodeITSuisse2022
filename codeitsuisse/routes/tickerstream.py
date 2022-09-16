@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 from datetime import  datetime
 
 class Ticker:
-	def _init_(self, *args):
+	def __init__(self, *args):
 		self.timestamp = datetime.strptime(args[0], '%H:%M')
 		self.ticker = args[1]
 		self.quantity = int(args[2])
@@ -22,10 +22,10 @@ class Ticker:
 	def seperateIntoQuantity(self):
 		return [Ticker(self.strTime, self.ticker, 1, self.price) for i in range(self.quantity)]
 
-	def _repr_(self):
+	def __repr__(self):
 		return f"{self.strTime},{self.ticker},{self.quantity},{self.price}"
 
-	def _lt_(self, other):
+	def __lt__(self, other):
 		if self.timestamp == other.timestamp:
 			return self.ticker < other.ticker
 		return self.timestamp < other.timestamp
