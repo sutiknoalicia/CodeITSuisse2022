@@ -32,7 +32,7 @@ class Ticker:
 
 @app.route("/tickerStreamPart1", methods=['GET', 'POST'])
 def to_cumulative():
-	stream = json.loads(request.data)
+	stream = json.loads(request.data)["stream"]
 	Timestamps = {}
 	result = []
 	for tick in stream:
