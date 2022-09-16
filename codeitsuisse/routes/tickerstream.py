@@ -48,6 +48,7 @@ def to_cumulative():
 		for ticker in tickers:
 			result[-1] += f",{ticker.ticker},{ticker.quantity},{ticker.price}"
 	return jsonify({"output" : result})
+	raise Exception
 
 @app.route("/tickerStreamPart2", methods=['GET', 'POST'])
 def to_cumulative_delayed():
@@ -74,3 +75,5 @@ def to_cumulative_delayed():
 				result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter, cumSum)))
 				break
 	return jsonify({"output" : result})
+	raise Exception
+
