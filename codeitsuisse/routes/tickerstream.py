@@ -41,7 +41,7 @@ def to_cumulative(stream: list):
     group = ",".join(group)
     streamFNL.append(timestamp[i]+","+group)
     
-  return streamFNL
+  return jsonify(streamFNL)
   raise Exception
 
 @app.route('/tickerStreamPart2', methods=['POST'])
@@ -71,7 +71,7 @@ def to_cumulative_delayed(stream: list, quantity_block: int):
             break
   
   streamFNL = sorted(streamFNL)
-  return streamFNL #returns sorted stream where timestamps are in chronological order
+  return jsonify(streamFNL) #returns sorted stream where timestamps are in chronological order
   raise Exception
 
 
