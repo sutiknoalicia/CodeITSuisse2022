@@ -61,15 +61,15 @@ def calendar():
     output = "".join(output)
     
     #part2
-    for i in range(len(calendar)):
-        if calendar[i] == ' ':
+    for i in range(len(output)):
+        if output[i] == ' ':
             year = 2001 + i
             break
 
     if year % 4 == 0:
         monthDays[2] += 1
 
-    calList = calendar.split(',')
+    calList = output.split(',')
     output2 = []
 
     for i in range(12):
