@@ -35,8 +35,9 @@ def checkWeekend(m: list):
     return False
 
 @app.route("/calendarDays", methods=['GET', 'POST'])
-#part1
+
 def calendar():
+    #part1
     stream = json.loads(request.data)
     year = stream[0]
     firstDate = datetime.datetime(year, 1, 1)
@@ -62,12 +63,8 @@ def calendar():
                     output[i] = "".join(new)
     
     output = "".join(output)
-    return jsonify({"part1" : output})
-
-#part 2
-
-def ordDates(calendar: string):
-    stream = json.loads(request.data)
+    
+    #part2
     for i in range(len(calendar)):
         if calendar[i] == ' ':
             year = 2001 + i
@@ -77,7 +74,7 @@ def ordDates(calendar: string):
         monthDays[2] += 1
 
     calList = calendar.split(',')
-    output = []
+    output2 = []
 
     for i in range(12):
         firstDate = datetime.datetime(year, i+1, 1)
@@ -89,7 +86,7 @@ def ordDates(calendar: string):
 
         if calList[i] == "alldays":
             for x in range(7):
-                output.append(offset+x)
+                output2.append(offset+x)
 
         elif calList[i] == "weekday":
             untilWeekend = 5 - firstDay
@@ -99,29 +96,29 @@ def ordDates(calendar: string):
                 for x in range(untilWeekend):
                     counter += 1
                     offset += x
-                    output.append(offset)
+                    output2.append(offset)
                 offset += 3
             else:
                 offset += (7 - firstDay)
             counter = 5 - counter
             for x in range(counter):
-                output.append(offset+x)
+                output2.append(offset+x)
 
         elif calList[i] == "weekend":
             untilWeekend = 5 - firstDay
 
             if untilWeekend < 0:
-                output.append(offset)
+                output2.append(offset)
                 offset += 6
-                output.append(offset)
+                output2.append(offset)
             elif untilWeekend > 0:
                 for x in range(untilWeekend+1):
                     offset += x
                 for x in range(2):
-                    output.append(offset+x)
+                    output2.append(offset+x)
             elif untilWeekend == 0:
                 for x in range(2):
-                    output.append(offset+x)
+                    output2.append(offset+x)
         
         else:
             for x in range(7):
@@ -130,8 +127,8 @@ def ordDates(calendar: string):
                     diff = thisDay - firstDay
                     if diff < 0:
                         diff += 7
-                    output.append(offset+diff)
+                    output2.append(offset+diff)
         
-    output.sort()
-    output.insert(0, year)
-    return jsonify({"part2" : output})
+    output2.sort()
+    output2.insert(0, year)
+    return jsonify({"part1" : output , "part2" : output2})
