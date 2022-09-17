@@ -17,7 +17,7 @@ def maxPrice():
 				while temp[-1] != 4:
 					if temp[-1] % 2 == 0: temp.append(temp[-1] / 2)
 					else: temp.append(temp[-1] * 3 + 1)
-				result[-1].append(int(max(temp)))
+				result[-1].append(str(f" {max(temp)}"))
 			else:
-				result[-1].append(4)
+				result[-1].append(" 4")
 	return jsonify(result)
