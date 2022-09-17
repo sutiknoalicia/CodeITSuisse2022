@@ -72,4 +72,4 @@ def main():
 
 	bot.findLetterLocations()
 	
-	return bot.pathFind()
+	return (bot.letterLocs)
