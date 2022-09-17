@@ -23,7 +23,6 @@ def hailstone(n):
 	return temp
 
 @app.route("/cryptocollapz", methods=['GET', 'POST'])
-@memoize
 def maxPrice():
 	stream = request.get_json(force=True)
 	
