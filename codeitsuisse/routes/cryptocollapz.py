@@ -20,13 +20,13 @@ def maxPrice():
 	
 	for price in np.nditer(arr, op_flags=['readwrite'], flags=["refs_ok"]):
 		if price == 1 or price == 2:
-			price[...] = 4
+			price = 4
 		else:
 			temp = price
 			while price != 1:
 				if price > temp:
 					temp = price
-				price[...] = hailstone(price[...])
-			price[...] = temp
+				price = hailstone(price)
+			price = temp
 	
 	return jsonify(arr.tolist())
