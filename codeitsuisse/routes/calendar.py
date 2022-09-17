@@ -3,6 +3,12 @@ from multiprocessing import dummy
 import string
 from subprocess import call
 
+from flask import Flask, jsonify, request
+from codeitsuisse import app
+import json
+import logging
+logger = logging.getLogger(__name__)
+
 #part 1
 
 dayLetter = ['m', 't', 'w', 't', 'f', 's', 's']
