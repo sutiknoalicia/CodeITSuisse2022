@@ -13,7 +13,7 @@ def maxPrice():
 		result.append([])
 		for price in prices:
 			temp = [int(price)]
-			if temp[-1] == 1 or temp[-1] == 2:
+			if not temp[-1] == 1 or not temp[-1] == 2:
 				while temp[-1] != 4:
 					if temp[-1] % 2 == 0: temp.append(temp[-1] / 2)
 					else: temp.append(temp[-1] * 3 + 1)
