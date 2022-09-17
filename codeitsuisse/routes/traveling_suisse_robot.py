@@ -40,10 +40,10 @@ class Robot():
 	def findNext(self, target):
 		target = self.string[target]
 		distances = []
-		for i in range(0, len(letterLocs[target])):
-			distances.append(EuclieanDistance(self.location, letterLocs[target][i]))
+		for i in range(0, len(self.letterLocs[target])):
+			distances.append(EuclieanDistance(self.location, self.letterLocs[target][i]))
 		distance, idx = min((distance, idx) for (idx, distance) in enumerate(distances))
-		return letterLocs[target][idx]
+		return self.letterLocs[target][idx]
 
 	def pathFind(self):
 		path = ""
