@@ -34,7 +34,7 @@ def calendar():
     output = ["       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,"]
 
     #part1
-    stream = json.loads(request.data)["numbers"]
+    stream = json.loads(request.data)
     year = stream[0]
     firstDate = datetime.datetime(year, 1, 1)
     for i in range(1, len(stream)):
