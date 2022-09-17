@@ -9,7 +9,7 @@ class Robot():
 		self.map = mapData
 		self.location = None
 		for i in range(0, len(mapData)):
-			self.location = (i, mapData[i].index("X"))
+			self.location = (i, mapData[i].find("X"))
 			break
 		self.letterLocs = {
 			"c" : [],
