@@ -35,6 +35,7 @@ def to_cumulative():
 		stream = json.loads(request.data)["stream"]
 		Timestamps = {}
 		result = []
+		tickerDict = {}
 		for tick in stream:
 			temp = Ticker(*tick.split(","))
 			temp.evaluatePriceSingle()
