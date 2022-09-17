@@ -50,7 +50,7 @@ class Robot():
 
 	def pathFind(self):
 		path = ""
-		for i in range(0, 12):
+		for i in range(0, len(self.string)):
 			coordinates = self.findNext(i)
 			newPath = tuple(map(lambda i, j: i - j, self.location, coordinates))
 			if newPath[0] > 0: path += newPath[0] * "S"
