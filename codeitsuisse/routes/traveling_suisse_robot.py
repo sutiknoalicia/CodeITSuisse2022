@@ -4,9 +4,10 @@ import json
 import logging
 logger = logging.getLogger(__name__)
 
-@app.route("/traveling-suisse-robot", methods=['GET', 'POST'])
-def findTravelPath():
-	Map = request.data	
-	arrMap = list(Map.split('\n'))
-		      
-	return jsonify(arrMap)
+@app.route("/travelling-suisse-robot", methods=['GET', 'POST'])
+@accept('text/plain')
+def main():
+	Map = request.get_data().decode('utf-8').strip()
+	Map = Map.splitlines(True)
+
+	return jsonify(Map)
