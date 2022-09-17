@@ -53,7 +53,7 @@ def to_cumulative():
 					tickerDict[ticker.ticker][0] += ticker.quantity
 					tickerDict[ticker.ticker][1] += ticker.price
 					result[-1] = f"{str(key.time())[0:5]},{ticker.ticker},{tickerDict[ticker.ticker][0]},{tickerDict[ticker.ticker][1]}"
-					tickerDict[ticker.ticker] = [ticker.quantity, ticker.price]
+				tickerDict[ticker.ticker] = [ticker.quantity, ticker.price]
 				
 		return jsonify({"output" : result})
 		raise Exception
