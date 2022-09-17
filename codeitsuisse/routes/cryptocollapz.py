@@ -6,22 +6,21 @@ import pandas as pd
 
 logger = logging.getLogger(__name__)
 
-count = {1: 1}
+count = {1 : 4, 2 : 4}
 
-def recur(n):
-    if n not in count:  # memoize
-        count[n] = 1 + recur(n//2 if n % 2 == 0 else 3*n + 1)
-    return count[n]
 
 def hailstone(n):
-	temp = n
-	if n == 1 or n == 2: return 4
-	while n != 1:
-		if n > temp:
-			temp = n
-		n = recur(n)
-	return temp
-
+	if n not in count:
+		temp = n
+		if n == 1 or n == 2: return 4
+		while n != 1:
+			if n > temp:
+				temp = n
+			if n % 2 == 0: n = n // 2
+			else: n = n * 3 + 1
+		count[n] = temp
+		return temp
+	else: return count[n]
 @app.route("/cryptocollapz", methods=['GET', 'POST'])
 def maxPrice():
 	stream = request.get_json(force=True)
