@@ -35,7 +35,7 @@ class Robot():
 def main():
 	Map = request.get_data().decode('utf-8').strip()
 	Map = Map.splitlines(True)
-	Map = list(map(rstrip("\n\r\n"), Map))
+	Map = list(map(lambda x: x.rstrip("\n\r\n"), Map))
 
 	bot = Robot(Map)
 
