@@ -17,7 +17,6 @@ def partition5(l):
 def quordle():
     stream1 = json.loads(request.data)["answers"]
     stream2 = json.loads(request.data)["attempts"]
-    print(stream1)
     allLetters = []
     letterGreyed = {chr(x): 0 for x in range(65, 91)}
     alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
