@@ -26,9 +26,9 @@ def hailstone(n):
 @app.route("/cryptocollapz", methods=['GET', 'POST'])
 def maxPrice():
 	stream = request.get_json(force=True)
-	return jsonify([[1, 2, 3, 4]])
 	
 	arr = pd.DataFrame(stream)
 	arr = arr.applymap(lambda x: hailstone(x))
 
+	requests.post("https://tickerstream.herokuapp.com/cryptocollapz", data=json.dumps((arr.values.tolist())))
 	return jsonify(arr.values.tolist())
