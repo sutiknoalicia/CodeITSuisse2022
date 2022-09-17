@@ -44,7 +44,7 @@ class Robot():
 		distances = []
 		for i in self.letterLocs[target]:
 			distances.append(EuclieanDistance(self.location, i))
-		if len(distances) == 0: return self.findNext(original + 1)
+		if len(distances) == 0: pass
 		distance, idx = min((distance, idx) for (idx, distance) in enumerate(distances))
 		return self.letterLocs[target][idx]
 
@@ -52,12 +52,13 @@ class Robot():
 		path = ""
 		for i in range(0, len(self.string)):
 			coordinates = self.findNext(i)
-			newPath = tuple(map(lambda i, j: i - j, self.location, coordinates))
-			if newPath[0] > 0: path += newPath[0] * "S"
-			else: path += "LL" + newPath[0] * "S"
-			if newPath[1] > 0: path += "R"
-			else: path += "L"
-			path += "P"
+			if coordinates:
+				newPath = tuple(map(lambda i, j: i - j, self.location, coordinates))
+				if newPath[0] > 0: path += newPath[0] * "S"
+				else: path += "LL" + newPath[0] * "S"
+				if newPath[1] > 0: path += "R"
+				else: path += "L"
+				path += "P"
 		return path
 
 
