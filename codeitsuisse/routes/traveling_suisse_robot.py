@@ -29,7 +29,7 @@ class Robot():
 		self.string = "codeitsuisse"
 
 	def findLetterLocations(self):
-		number = 12
+		number = 13
 		for i in range(0, len(self.map)):
 			while number != 0:
 				if any(letter in self.letterLocs.keys() for letter in self.map[i]):
