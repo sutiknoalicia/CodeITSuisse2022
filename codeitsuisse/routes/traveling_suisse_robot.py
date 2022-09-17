@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 def strToMap(strMap):
 	Map = [line.split(" ") for line in strMap.split("\n")]
 
-@app.route("/traveling_suisse_robot", methods=['GET', 'POST'])
+@app.route("/traveling-suisse-robot", methods=['GET', 'POST'])
 def findTravelPath():
 	stream = request.get_json(force=True)
 	return stream
