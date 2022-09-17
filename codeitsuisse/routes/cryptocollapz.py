@@ -16,7 +16,7 @@ def hailstone(n):
 def maxPrice():
 	stream = request.get_json(force=True)
 	
-	arr = np.asarray(stream)
+	arr = np.asarray(stream, dtype=object)
 	
 	for price in np.nditer(arr, op_flags=['readwrite']):
 		if not price == 1 or not price == 2:
