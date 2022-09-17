@@ -18,11 +18,11 @@ def maxPrice():
 		for key2, price in enumerate(prices):
 			if not price == 1 or not price == 2:
 				temp = price
-				while price != 2:
+				while price != 1:
 					if price > temp:
 						temp = price
 					price = hailstone(price)
-				stream[key1][key2] = price
+				stream[key1][key2] = temp
 			else:
 				stream[key1][key2] = 4
 	return jsonify(stream)
