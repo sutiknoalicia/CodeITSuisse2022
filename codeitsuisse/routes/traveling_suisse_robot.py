@@ -10,4 +10,6 @@ def strToMap(strMap):
 @app.route("/traveling-suisse-robot", methods=['GET', 'POST'])
 def findTravelPath():
 	Map = request.data
-	return true
+	Map = [line.split(" ") for line in Map.split("\n")]
+	
+	return jsonify(Map)
