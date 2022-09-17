@@ -14,7 +14,7 @@ def maxPrice():
 				temp = [price]
 				while temp[-1] != 2:
 					if temp[-1] % 2 == 0: temp.append(temp[-1] / 2)
-					else: temp.append(temp[-1] * 3 + 1)
+					else: temp.append(temp[-1] * 3 + 1 / 2)
 				stream[key1][key2] = int(max(temp))
 			else:
 				stream[key1][key2] = 4
