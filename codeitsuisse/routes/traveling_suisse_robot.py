@@ -13,7 +13,7 @@ class Robot():
 			self.location = (i, i.index("X"))
 			break
 
-@app.route("/traveling-suisse-robot.py", methods=['GET', 'POST'])
+@app.route("/traveling-suisse-robot", methods=['GET', 'POST'])
 def main():
 	Map = request.get_data().decode('utf-8').strip()
 	Map = Map.splitlines(True)
