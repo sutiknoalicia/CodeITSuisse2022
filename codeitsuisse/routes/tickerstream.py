@@ -68,7 +68,7 @@ def to_cumulative_delayed():
 			else:
 				Timestamps[key] = temp.seperateIntoQuantity()
 		for ticks in Timestamps.keys():
-			Timestamps[ticks].sort(key=lambda item: item[1])
+			Timestamps[ticks].sort()
 			cumSum = 0
 			counter = 0
 			for i in range(0, len(Timestamps[ticks])):
@@ -77,6 +77,6 @@ def to_cumulative_delayed():
 				if (counter) == quantity_block:
 					curr = Timestamps[ticks][i]
 					result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter, cumSum)))
-					continue
+					break
 		return jsonify({"output" : result})
 		raise Exception
