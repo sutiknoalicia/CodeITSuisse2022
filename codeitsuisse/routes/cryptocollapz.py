@@ -17,7 +17,7 @@ def hailstone(n):
 			if n > temp:
 				temp = n
 			if n in count:
-				n = count[n]
+				return count[n]
 			elif n % 2 == 0: n = n // 2
 			else: n = n * 3 + 1
 		count[n] = temp
