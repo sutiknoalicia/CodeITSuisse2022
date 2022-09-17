@@ -8,6 +8,6 @@ def strToMap(strMap):
 	Map = [line.split(" ") for line in strMap.split("\n")]
 
 @app.route("/travelling-suisse-robot", methods=['GET', 'POST'])
-def main():
+def findTravelPath():
 	Map = request.get_json(force=True)
 	return Map
