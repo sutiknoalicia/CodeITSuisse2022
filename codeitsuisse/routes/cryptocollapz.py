@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from codeitsuisse import app
 import json
 import logging
+import numpy as np
 
 logger = logging.getLogger(__name__)
 
@@ -14,14 +15,17 @@ def hailstone(n):
 @app.route("/cryptocollapz", methods=['GET', 'POST'])
 def maxPrice():
 	stream = request.get_json(force=True)
-	for key1, prices in enumerate(stream):
-		for key2, price in enumerate(prices):
-			if not price == 1 or not price == 2:
-				temp = price
-				while price != 1:
-					if price > temp:
-						temp = price
-					price = hailstone(price)
-				stream[key1][key2] = temp
-			else: 	stream[key1][key2] = 4
-	return jsonify(stream)
+	
+	arr = np.array(stream)
+	
+	for price in np.nditer(arr, op_flags=['readwrite']):
+		if not price == 1 or not price == 2:
+			temp = price
+			while price != 1:
+				if price > temp:
+					temp = price
+				price = hailstone(price)
+				price = temp
+		else: price = 4
+	
+	return jsonify(arr.tolist())
