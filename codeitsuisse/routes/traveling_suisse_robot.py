@@ -9,6 +9,8 @@ logger = logging.getLogger(__name__)
 def main():
 	Map = request.get_data().decode('utf-8').strip()
 	Map = Map.splitlines(True)
+	Map = list(map(rstrip("\n\r\n"), Map))
+	Map = list(map(lambda x: x.split(""), Map))
 
 	return jsonify(Map)
 
