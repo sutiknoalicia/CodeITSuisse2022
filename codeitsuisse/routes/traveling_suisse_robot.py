@@ -32,7 +32,7 @@ class Robot():
 		number = 12
 		for i in range(0, len(self.map)):
 			while number != 0:
-				if any((letter in self.letterLocs.keys()) for letter in self.map[i]):
+				if any(letter in self.letterLocs.keys for letter in self.map[i]):
 					letterLocs[letter].append(i.find(letter))
 					number -= 1
 				else: break
@@ -45,6 +45,17 @@ class Robot():
 		distance, idx = min((distance, idx) for (idx, distance) in enumerate(distances))
 		return letterLocs[target][idx]
 
+	def pathFind(self):
+		path = ""
+		for i in range(0, 12):
+			coordinates = findNext(i)
+			newPath = tuple(map(lambda i, j: i - j, self.location, coordinates))
+			if newPath[0] > 0: path += newPath[0] * "S"
+			else: path += "LL" + newPath[0] * "S"
+			if newPath[1] > 0: path += "R"
+			else: path += "L"
+		return path
+
 
 @app.route("/traveling-suisse-robot", methods=['GET', 'POST'])
 def main():
@@ -55,5 +66,5 @@ def main():
 	bot = Robot(Map)
 
 	bot.findLetterLocations()
-
-	return jsonify(Map) 
+	
+	return bot.pathFind()
