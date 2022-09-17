@@ -22,7 +22,7 @@ class Robot():
 			"u" : [],
 		}
 
-	def findLetterLocations:
+	def findLetterLocations(self):
 		number = 12
 		for i in range(0, len(self.map)):
 			while number != 0:
