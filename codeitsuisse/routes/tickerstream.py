@@ -52,7 +52,7 @@ def to_cumulative():
 
 @app.route("/tickerStreamPart2", methods=['GET', 'POST'])
 def to_cumulative_delayed():
-	if request.methods == "POST":
+	if request.method == "POST":
 		stream = request.args.get("stream", "Parameter \'stream\' was not found")
 		quantity_block = request.args.get("quantityBlock", "Parameter \'quantity block\' was not found")
 		Timestamps = {}
