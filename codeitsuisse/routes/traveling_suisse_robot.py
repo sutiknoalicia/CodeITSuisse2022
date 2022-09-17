@@ -5,11 +5,18 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-@app.route("/traveling-suisse-robot", methods=['GET', 'POST'])
+class Robot():
+	def __init__(self, mapData):
+		self.map = mapData
+		self.location = None
+		for i in range(0, len(mapData)):
+			self.location = (i, i.index("X"))
+			break
+
+@app.route("/traveling_suisse_robot.py", methods=['GET', 'POST'])
 def main():
 	Map = request.get_data().decode('utf-8').strip()
 	Map = Map.splitlines(True)
-	Map = list(map(lambda x: x.rstrip(), Map))
+	Map = list(map(rstrip("\n\r\n"), Map))
 
 	return jsonify(Map)
-
