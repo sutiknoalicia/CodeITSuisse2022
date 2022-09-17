@@ -69,4 +69,4 @@ def to_cumulative_delayed():
 						break
 	
 	streamFNL = sorted(streamFNL)
-	return jsonify({"output" : result}) #returns sorted stream where timestamps are in chronological order
+	return jsonify({"output" : streamFNL}) #returns sorted stream where timestamps are in chronological order
