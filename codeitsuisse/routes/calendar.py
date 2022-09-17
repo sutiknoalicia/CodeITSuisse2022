@@ -9,14 +9,6 @@ logger = logging.getLogger(__name__)
 
 import datetime
 
-dayLetter = ['m', 't', 'w', 't', 'f', 's', 's']
-
-months = [[False for i in range(7)] for x in range(12)]
-
-monthDays = [1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30]
-
-output = ["       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,"]
-
 def checkAllWeek(m: list):
     for i in range(7):
         if not m[i]:
@@ -36,8 +28,13 @@ def checkWeekend(m: list):
 @app.route("/calendarDays", methods=['GET', 'POST'])
 
 def calendar():
+    dayLetter = ['m', 't', 'w', 't', 'f', 's', 's']
+    months = [[False for i in range(7)] for x in range(12)]
+    monthDays = [1, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30]
+    output = ["       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,", "       ,"]
+
     #part1
-    stream = json.loads(request.data)
+    stream = json.loads(request.data)["numbers"]
     year = stream[0]
     firstDate = datetime.datetime(year, 1, 1)
     for i in range(1, len(stream)):
