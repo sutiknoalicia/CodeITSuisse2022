@@ -12,18 +12,24 @@ class Robot():
 			self.location = (i, i.index("X"))
 			break
 		self.letterLocs = {
-			"c" : []
-			"o" : []
-			"d" : []
-			"e" : []
-			"i" : []
-			"t" : []
-			"s" : []
-			"u" : []
+			"c" : [],
+			"o" : [],
+			"d" : [],
+			"e" : [],
+			"i" : [],
+			"t" : [],
+			"s" : [],
+			"u" : [],
 		}
 
 	def findLetterLocations:
-		pass
+		number = 12
+		for i in range(0, len(self.map)):
+			while number != 0:
+				if any(letter in self.letterLocs.keys for letter in self.map[i]):
+					letterLocs[letter].append(i.index(letter))
+					number -= 1
+				else: break
 
 @app.route("/traveling-suisse-robot", methods=['GET', 'POST'])
 def main():
@@ -33,4 +39,4 @@ def main():
 
 	bot = Robot(Map)
 
-	return jsonify(Map)
+	return jsonify(Map) 
