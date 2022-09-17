@@ -54,6 +54,7 @@ class Robot():
 			else: path += "LL" + newPath[0] * "S"
 			if newPath[1] > 0: path += "R"
 			else: path += "L"
+			path += "P"
 		return path
 
 
