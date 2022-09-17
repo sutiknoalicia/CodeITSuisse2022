@@ -43,6 +43,7 @@ def to_cumulative():
 				Timestamps[temp.timestamp] += [temp]
 			else:
 				Timestamps[temp.timestamp] = [temp]
+		Timestamps = dict(sorted(Timestamps.items(), key=lambda item: item[1]))
 		for key, tickers in Timestamps.items():
 			result.append(str(key.time())[0:5])
 			tickers.sort()
