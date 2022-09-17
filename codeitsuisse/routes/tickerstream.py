@@ -53,7 +53,7 @@ def to_cumulative():
 @app.route("/tickerStreamPart2", methods=['GET', 'POST'])
 def to_cumulative_delayed():
 	if request.method == "POST":
-		stream = json.loads(request.data)["stream"]
+		stream = request.json("stream")
 		quantity_block = json.loads(request.data)["quantityBlock"]
 		Timestamps = {}
 		result = []
@@ -73,7 +73,7 @@ def to_cumulative_delayed():
 				counter += 1
 				if (counter) == quantity_block:
 					curr = Timestamps[ticks][i]
-					result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter + result[-1][2], cumSum + result[-1][3])))
+					result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter, cumSum)))
 					break
 		return jsonify({"output" : result})
 		raise Exception
