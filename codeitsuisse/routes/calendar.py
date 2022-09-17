@@ -8,7 +8,6 @@ logger = logging.getLogger(__name__)
 #part 1
 
 import datetime
-import string
 
 dayLetter = ['m', 't', 'w', 't', 'f', 's', 's']
 
