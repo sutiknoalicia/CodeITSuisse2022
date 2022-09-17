@@ -15,8 +15,8 @@ def partition5(l):
 @app.route("/quordleKeyboard", methods=['GET', 'POST'])
 
 def quordle():
-    stream1 = json.loads(request.data)["answers"]
-    stream2 = json.loads(request.data)["attempts"]
+    stream1 = json.load(request)["answers"]
+    stream2 = json.load(request)["attempts"]
     allLetters = []
     letterGreyed = {chr(x): 0 for x in range(65, 91)}
     alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -53,7 +53,7 @@ def quordle():
     
     #part2
 
-    stream3 = json.loads(request.data)["numbers"]
+    stream3 = json.load(request)["numbers"]
     pNums = list(partition5(stream3))
     fiveBin = [[0,0,0,0,0] for i in range(5)]
     denaries = ['', '', '', '', '']
