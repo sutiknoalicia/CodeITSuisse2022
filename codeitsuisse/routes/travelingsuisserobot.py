@@ -9,5 +9,5 @@ def strToMap(strMap):
 
 @app.route("/travelling-suisse-robot", methods=['GET', 'POST'])
 def findTravelPath():
-	Map = request.get_json(force=True)
+	stream = request.get_json(force=True)
 	return Map
