@@ -16,7 +16,17 @@ def hailstone(n):
 		else: n = n * 3 + 1
 	return temp
 
+def memoize(f):
+    results = {}
+    def helper(n):
+        if n not in results:
+            results[n] = f(n)
+        return results[n]
+    return helper
+
+
 @app.route("/cryptocollapz", methods=['GET', 'POST'])
+@memoize
 def maxPrice():
 	stream = request.get_json(force=True)
 	
