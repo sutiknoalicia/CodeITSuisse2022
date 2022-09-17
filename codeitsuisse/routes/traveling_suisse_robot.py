@@ -14,7 +14,7 @@ class Robot():
 		self.map = mapData
 		self.location = None
 		for i in range(0, len(mapData)):
-			self.location = (i, mapData[i].index("X"))
+			self.location = (i, mapData[i].find("X"))
 			break
 		self.letterLocs = {
 			"c" : [],
@@ -33,7 +33,7 @@ class Robot():
 		for i in range(0, len(self.map)):
 			while number != 0:
 				if any(letter in self.letterLocs.keys for letter in self.map[i]):
-					letterLocs[letter].append(i.index(letter))
+					letterLocs[letter].append(i.find(letter))
 					number -= 1
 				else: break
 
