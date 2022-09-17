@@ -21,6 +21,6 @@ def maxPrice():
 	stream = request.get_json(force=True)
 	arr = pd.DataFrame(stream)
 
-	arr.applymap(hailstone())
+	arr.applymap(lambda x: hailstone(x))
 
 	return jsonify([arr])
