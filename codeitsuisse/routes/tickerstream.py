@@ -31,48 +31,50 @@ class Ticker:
 
 @app.route("/tickerStreamPart1", methods=['GET', 'POST'])
 def to_cumulative():
-	stream = json.loads(request.data)["stream"]
-	Timestamps = {}
-	result = []
-	for tick in stream:
-		temp = Ticker(*tick.split(","))
-		temp.evaluatePriceSingle()
-		if temp.timestamp in Timestamps.keys():
-			Timestamps[temp.timestamp] += [temp]
-		else:
-			Timestamps[temp.timestamp] = [temp]
-	for key, tickers in Timestamps.items():
-		result.append(str(key.time())[0:5])
-		tickers.sort()
-		for ticker in tickers:
-			result[-1] += f",{ticker.ticker},{ticker.quantity},{ticker.price}"
-	return jsonify({"output" : result})
-	raise Exception
+	if request.method == 'POST':
+		stream = request.args.get("stream", "Parameter was not found")
+		Timestamps = {}
+		result = []
+		for tick in stream:
+			temp = Ticker(*tick.split(","))
+			temp.evaluatePriceSingle()
+			if temp.timestamp in Timestamps.keys():
+				Timestamps[temp.timestamp] += [temp]
+			else:
+				Timestamps[temp.timestamp] = [temp]
+		for key, tickers in Timestamps.items():
+			result.append(str(key.time())[0:5])
+			tickers.sort()
+			for ticker in tickers:
+				result[-1] += f",{ticker.ticker},{ticker.quantity},{ticker.price}"
+		return jsonify({"output" : *result})
+		raise Exception
 
 @app.route("/tickerStreamPart2", methods=['GET', 'POST'])
 def to_cumulative_delayed():
-	stream = request.args.get("stream")
-	quantity_block = request.args.get("quantityBlock")
-	Timestamps = {}
-	result = []
-	for tick in stream:
-		temp = Ticker(*tick.split(","))
-		key = temp.ticker
-		if key in Timestamps.keys():
-			Timestamps[key] += temp.seperateIntoQuantity()
-		else:
-			Timestamps[key] = temp.seperateIntoQuantity()
-	for ticks in Timestamps.keys():
-		Timestamps[ticks].sort()
-		cumSum = 0
-		counter = 0
-		for i in range(0, len(Timestamps[ticks])):
-			cumSum += Timestamps[ticks][i].price
-			counter += 1
-			if (counter) == quantity_block:
-				curr = Timestamps[ticks][i]
-				result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter + result[-1][2], cumSum + result[-1][3])))
-				break
-	return jsonify({"output" : result})
-	raise Exception
+	if request.methods == "POST":
+		stream = request.args.get("stream", "Parameter \'stream\' was not found")
+		quantity_block = request.args.get("quantityBlock", "Parameter \'quantity block\' was not found")
+		Timestamps = {}
+		result = []
+		for tick in stream:
+			temp = Ticker(*tick.split(","))
+			key = temp.ticker
+			if key in Timestamps.keys():
+				Timestamps[key] += temp.seperateIntoQuantity()
+			else:
+				Timestamps[key] = temp.seperateIntoQuantity()
+		for ticks in Timestamps.keys():
+			Timestamps[ticks].sort()
+			cumSum = 0
+			counter = 0
+			for i in range(0, len(Timestamps[ticks])):
+				cumSum += Timestamps[ticks][i].price
+				counter += 1
+				if (counter) == quantity_block:
+					curr = Timestamps[ticks][i]
+					result.insert(0, str(Ticker(curr.strTime, curr.ticker, counter + result[-1][2], cumSum + result[-1][3])))
+					break
+		return jsonify({"output" : *result})
+		raise Exception
 
