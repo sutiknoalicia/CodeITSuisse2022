@@ -5,9 +5,9 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-@app.route("/cryptocollapz", methods=['GET', 'POST'])
+@app.route("/ cryptocollapz", methods=['GET', 'POST'])
 def maxPrice():
-	stream = json.load(request.data)
+	stream = json.loads(request.data)
 	result = []
 	for prices in stream:
 		result.append([])
