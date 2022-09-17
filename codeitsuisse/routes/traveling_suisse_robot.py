@@ -72,4 +72,4 @@ def main():
 
 	bot.findLetterLocations()
 	
-	return (bot.letterLocs)
+	return "SS"
