@@ -25,7 +25,7 @@ def maxPrice():
 				if price > temp:
 					temp = price
 				price[...] = hailstone(price[...])
-				price[...] = temp
+			price[...] = temp
 		else: price[...] = 4
 	
 	return jsonify(arr.tolist())
