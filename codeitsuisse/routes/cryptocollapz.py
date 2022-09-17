@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 @app.route("/cryptocollapz", methods=['GET', 'POST'])
 def maxPrice():
 	stream = request.get_json(force=True)
-	return jsonify([ 1, 2, 3, 4, 5 ])
+	return jsonify([[1, 2, 3, 4, 5]])
 	for key1, prices in enumerate(stream):
 		for key2, price in enumerate(prices):
 			if not price == 1 or not price == 2:
