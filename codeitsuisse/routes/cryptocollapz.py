@@ -18,7 +18,7 @@ def maxPrice():
 	
 	arr = np.asarray(stream, dtype=object)
 	
-	for price in np.nditer(arr, op_flags=['readwrite']):
+	for price in np.nditer(arr, op_flags=['readwrite'], flags=["refs_ok"]):
 		if not price == 1 or not price == 2:
 			temp = price
 			while price != 1:
