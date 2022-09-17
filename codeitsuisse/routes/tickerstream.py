@@ -76,9 +76,9 @@ def to_cumulative_delayed():
 				Timestamps[key] = temp.seperateIntoQuantity()
 		for ticks in Timestamps.keys():
 			Timestamps[ticks].sort()
-		temp = {x for v in Timestamps.values() for x in v}	
+		temp = [x for v in Timestamps.values() for x in v]
 		
-		for i in range(0, len(temp))):
+		for i in range(0, len(temp)):
 			cumSum += temp[i].price
 			counter += 1
 			if (counter) == quantity_block:
