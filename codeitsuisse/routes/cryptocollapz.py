@@ -19,7 +19,7 @@ def hailstone(n):
 @app.route("/cryptocollapz", methods=['GET', 'POST'])
 def maxPrice():
 	stream = request.get_json(force=True)
-	arr = pd.dataframe(stream)
+	arr = pd.DataFrame(stream)
 
 	arr.applymap(hailstone())
 
