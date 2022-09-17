@@ -26,7 +26,5 @@ def hailstone(n):
 @app.route("/cryptocollapz", methods=['GET', 'POST'])
 def maxPrice():
 	stream = request.get_json(force=True)
-	
-	stream = list(map(hailstone, stream))
 
-	return jsonify(stream)
+	return jsonify([[hailstone(y) for y in x] for x in stream])
