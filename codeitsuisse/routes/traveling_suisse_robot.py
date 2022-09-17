@@ -56,6 +56,4 @@ def main():
 
 	bot.findLetterLocations()
 
-	for i in range(0, )
-
 	return jsonify(Map) 
