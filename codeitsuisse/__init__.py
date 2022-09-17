@@ -3,4 +3,4 @@ app = Flask(__name__)
 import codeitsuisse.routes.tickerstream
 import codeitsuisse.routes.cryptocollapz
 import codeitsuisse.routes.calendar
-import codeitsuisse.routes.traveling-suisse-robot
+import codeitsuisse.routes.travelingsuisserobot
