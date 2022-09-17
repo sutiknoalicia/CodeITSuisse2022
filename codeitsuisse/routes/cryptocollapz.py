@@ -20,4 +20,4 @@ def maxPrice():
 					if temp[-1] % 2 == 0: temp.append(temp[-1] / 2)
 					else: temp.append(temp[-1] * 3 + 1)
 				result[-1].append(int(max(temp)))
-	return f"<p>{result}<p>"
+	return f"{result}"
