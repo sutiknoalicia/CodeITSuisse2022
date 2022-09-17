@@ -45,7 +45,7 @@ def to_cumulative():
 		for key, tickers in Timestamps.items():
 			result.append(str(key.time())[0:5])
 			tickers.sort()
-			currentTicker = []
+			currentTicker = [""]
 			for ticker in tickers:
 				if currentTicker[0] != ticker.ticker:
 					result[-1] += f",{ticker.ticker},{ticker.quantity},{ticker.price}"
