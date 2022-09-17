@@ -32,7 +32,7 @@ class Robot():
 		number = 12
 		for i in range(0, len(self.map)):
 			while number != 0:
-				if any(letter in self.letterLocs.keys for letter in self.map[i]):
+				if any(letter in self.letterLocs.keys() for letter in self.map[i]):
 					letterLocs[letter].append(i.find(letter))
 					number -= 1
 				else: break
