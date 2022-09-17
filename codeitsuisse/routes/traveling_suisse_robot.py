@@ -23,7 +23,7 @@ class Robot():
 		}
 
 	def findLetterLocations:
-
+		pass
 
 @app.route("/traveling-suisse-robot", methods=['GET', 'POST'])
 def main():
