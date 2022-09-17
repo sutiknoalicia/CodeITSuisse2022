@@ -13,7 +13,6 @@ def partition5(l):
         yield l[i: i+5]
 
 @app.route("/quordleKeyboard", methods=['GET', 'POST'])
-
 def quordle():
     stream1 = json.loads(request.data)["answers"]
     stream2 = json.loads(request.data)["attempts"]
