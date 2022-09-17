@@ -16,8 +16,8 @@ def partition5(l):
 
 def quordle():
     if request.method == 'POST':
-        stream1 = request.json["answers"]
-        stream2 = request.json["attempts"]
+        stream1 = request.get_json["answers"]
+        stream2 = request.get_json["attempts"]
         allLetters = []
         letterGreyed = {chr(x): 0 for x in range(65, 91)}
         alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -54,7 +54,7 @@ def quordle():
         
         #part2
 
-        stream3 = request.json["numbers"]
+        stream3 = request.get_json["numbers"]
         pNums = list(partition5(stream3))
         fiveBin = [[0,0,0,0,0] for i in range(5)]
         denaries = ['', '', '', '', '']
