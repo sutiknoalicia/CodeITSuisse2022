@@ -20,4 +20,4 @@ def maxPrice():
 				result[-1].append(int(max(temp)))
 			else:
 				result[-1].append(4)
-	return jsonify([result])
+	return jsonify(result)
