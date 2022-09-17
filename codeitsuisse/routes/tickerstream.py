@@ -85,9 +85,6 @@ def to_cumulative_delayed():
 				result[i - 1].quantity *= 2
 				result[i - 1].price *= 2
 				result.pop(i)
-				
-		for i in range(1, len(result)):
-			result[i] = str(result[i])
 
-		return jsonify({"output" : result})
+		return jsonify({"output" : list(map(str, result)})
 		raise Exception
