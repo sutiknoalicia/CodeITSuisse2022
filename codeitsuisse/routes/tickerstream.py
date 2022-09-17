@@ -78,7 +78,13 @@ def to_cumulative_delayed():
 					curr = Timestamps[ticks][i]
 					result.insert(0, Ticker(curr.strTime, curr.ticker, counter, cumSum))
 					cumSum = 0
-		result.sort(lambda x:x.strTime])
+		result.sort(lambda x:x.strTime)
+
+		for i in range(1, len(result)):
+			if result[i] == result[i - 1]:
+				result[i - 1].quantity *= 2
+				result[i - 1].price *= 2
+				result.pop(i)
 
 		return jsonify({"output" : result})
 		raise Exception
