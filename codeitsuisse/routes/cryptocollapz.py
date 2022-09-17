@@ -22,6 +22,7 @@ def maxPrice():
 					if price > temp:
 						temp = price
 					price = hailstone(price)
+				stream[key1][key2] = price
 			else:
 				stream[key1][key2] = 4
 	return jsonify(stream)
