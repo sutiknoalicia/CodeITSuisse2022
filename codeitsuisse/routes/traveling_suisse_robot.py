@@ -42,8 +42,8 @@ class Robot():
 		original = target
 		target = self.string[target]
 		distances = []
-		for i in range(0, len(self.letterLocs[target])):
-			distances.append(EuclieanDistance(self.location, self.letterLocs[target][i]))
+		for i in self.letterLocs[target]:
+			distances.append(EuclieanDistance(self.location, i)
 		if len(distances) == 0: return self.findNext(original + 1)
 		distance, idx = min((distance, idx) for (idx, distance) in enumerate(distances))
 		return self.letterLocs[target][idx]
