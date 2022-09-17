@@ -78,6 +78,7 @@ def to_cumulative_delayed():
 					curr = Timestamps[ticks][i]
 					result.insert(0, Ticker(curr.strTime, curr.ticker, counter, cumSum))
 					cumSum = 0
+					continue
 				
 
 		
