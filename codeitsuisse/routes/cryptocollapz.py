@@ -2,31 +2,25 @@ from flask import Flask, jsonify, request
 from codeitsuisse import app
 import json
 import logging
-import numpy as np
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
 def hailstone(n):
-    if n % 2 == 0:
-        return n // 2
-    else:
-        return 3 * n + 1
+	temp = n
+	if n == 1 or n == 2: return 4
+	while n != 1:
+		if n > temp:
+			temp = n
+		if n % 2 == 0: n = n // 2
+		else: n = n * 3 + 1
+	return temp
 
 @app.route("/cryptocollapz", methods=['GET', 'POST'])
 def maxPrice():
 	stream = request.get_json(force=True)
-	
-	arr = np.asarray(stream, dtype='int64')
-	
-	for price in np.nditer(arr, op_flags=['readwrite'], flags=["refs_ok"]):
-		if price == 1 or price == 2:
-			price = 4
-		else:
-			temp = price
-			while price != 1:
-				if price > temp:
-					temp = price
-				price = hailstone(price)
-			price = temp
-	
-	return jsonify(arr.tolist())
+	arr = pd.dataframe(stream)
+
+	arr.applymap(hailstone())
+
+	return jsonify([arr])
