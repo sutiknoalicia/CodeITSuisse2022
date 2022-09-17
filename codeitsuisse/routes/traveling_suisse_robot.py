@@ -8,6 +8,5 @@ logger = logging.getLogger(__name__)
 def findTravelPath():
 	Map = request.data	
 	arrMap = list(Map.split('\n'))
-	arrMap = list(map(lambda x: x.split(" "), arrMap))
 		      
 	return jsonify(arrMap)
