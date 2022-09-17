@@ -5,7 +5,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-@app.route("/travelling-suisse-robot", methods=['GET', 'POST'])
+@app.route("/traveling_suisse_robot.py", methods=['GET', 'POST'])
 def main():
 	Map = request.get_data().decode('utf-8').strip()
 	Map = Map.splitlines(True)
