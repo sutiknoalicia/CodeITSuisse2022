@@ -65,6 +65,7 @@ def to_cumulative_delayed():
 		quantity_block = json.loads(request.data)["quantityBlock"]
 		Timestamps = {}
 		result = []
+		tickerDict = {}
 		for tick in stream:
 			temp = Ticker(*tick.split(","))
 			key = temp.ticker
