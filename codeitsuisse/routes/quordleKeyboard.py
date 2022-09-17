@@ -5,6 +5,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+import this
 import numpy as np
 
 def partition5(l):
@@ -14,65 +15,64 @@ def partition5(l):
 @app.route("/quordleKeyboard", methods=['GET', 'POST'])
 
 def quordle():
-    if request.method == 'POST':
-        stream1 = json.loads(request.data)["answers"]
-        stream2 = json.loads(request.data)["attempts"]
-        allLetters = []
-        letterGreyed = {chr(x): 0 for x in range(65, 91)}
-        alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-        alphabet2 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    stream1 = json.loads(request.data)["answers"]
+    stream2 = json.loads(request.data)["attempts"]
+    allLetters = []
+    letterGreyed = {chr(x): 0 for x in range(65, 91)}
+    alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    alphabet2 = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
-        #part1
+    #part1
 
-        allLetters = {x: [y for y in x] for x in stream1}
-        part1steps = []
+    allLetters = {x: [y for y in x] for x in stream1}
+    part1steps = []
 
-        print("         " + "".join(alphabet))
-        for x in stream2:
-            doneLetters = []
-            if x in stream1:
-                del allLetters[x]
-            allLettersList = list(allLetters.values())
-            allLettersList = np.array(allLettersList)
+    print("         " + "".join(alphabet))
+    for x in stream2:
+        doneLetters = []
+        if x in stream1:
+            del allLetters[x]
+        allLettersList = list(allLetters.values())
+        allLettersList = np.array(allLettersList)
 
-            for y in x:
-                if y not in allLettersList and y not in doneLetters:
-                    alphabet2[alphabet.index(y)] = ' '
-                    doneLetters.append(y)
-            
-            for i in range(len(alphabet2)):
-                if alphabet2[i] == ' ':
-                    letterGreyed[alphabet[i]] += 1
-
-            part1steps.append(x + "    " + "".join(alphabet2))
-
-        ans = ""
-        for i in range(65, 91):
-            if letterGreyed[chr(i)] != 0:
-                ans = ans + str(letterGreyed[chr(i)])
+        for y in x:
+            if y not in allLettersList and y not in doneLetters:
+                alphabet2[alphabet.index(y)] = ' '
+                doneLetters.append(y)
         
-        #part2
+        for i in range(len(alphabet2)):
+            if alphabet2[i] == ' ':
+                letterGreyed[alphabet[i]] += 1
 
-        stream3 = json.loads(request.data)["numbers"]
-        pNums = list(partition5(stream3))
-        fiveBin = [[0,0,0,0,0] for i in range(5)]
-        denaries = ['', '', '', '', '']
+        part1steps.append(x + "    " + "".join(alphabet2))
 
-        for i in range(5):
-            for j in range(5):
-                thisNum = str(pNums[i][j])
-                fiveBin[i][j] = int(thisNum in ans)
+    ans = ""
+    for i in range(65, 91):
+        if letterGreyed[chr(i)] != 0:
+            ans = ans + str(letterGreyed[chr(i)])
+    
+    #part2
+
+    stream3 = json.loads(request.data)["numbers"]
+    pNums = list(partition5(stream3))
+    fiveBin = [[0,0,0,0,0] for i in range(5)]
+    denaries = ['', '', '', '', '']
+
+    for i in range(5):
+        for j in range(5):
+            thisNum = str(pNums[i][j])
+            fiveBin[i][j] = int(thisNum in ans)
+    
+    for i in range(5):
+        den = int("".join(str(x) for x in fiveBin[i]), 2)
+        denaries[i] = alphabet[den-1]
         
-        for i in range(5):
-            den = int("".join(str(x) for x in fiveBin[i]), 2)
-            denaries[i] = alphabet[den-1]
-            
-        lastLine = part1steps[-1]
-        remainLetters = ""
+    lastLine = part1steps[-1]
+    remainLetters = ""
 
-        for i in range(5, len(lastLine)):
-            if lastLine[i] != ' ':
-                remainLetters += lastLine[i]
-        
-        ans2 = "".join(denaries) + remainLetters
-        return jsonify({"part1" : ans, "part2" : ans2})
+    for i in range(5, len(lastLine)):
+        if lastLine[i] != ' ':
+            remainLetters += lastLine[i]
+    
+    ans2 = "".join(denaries) + remainLetters
+    return jsonify({"part1" : ans, "part2" : ans2})
