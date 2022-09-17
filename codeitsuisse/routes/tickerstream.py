@@ -32,7 +32,7 @@ class Ticker:
 @app.route("/tickerStreamPart1", methods=['GET', 'POST'])
 def to_cumulative():
 	if request.method == 'POST':
-		stream = request.args.get("stream", "Parameter was not found")
+		stream = request.args.get("stream")
 		Timestamps = {}
 		result = []
 		for tick in stream:
