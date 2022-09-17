@@ -23,4 +23,4 @@ def maxPrice():
 
 	arr.applymap(lambda x: hailstone(x))
 
-	return jsonify([arr])
+	return jsonify(df.values.arr.tolist())
