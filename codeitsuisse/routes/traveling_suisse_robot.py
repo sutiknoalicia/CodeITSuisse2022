@@ -31,11 +31,12 @@ class Robot():
 	def findLetterLocations(self):
 		number = 13
 		for i in range(0, len(self.map)):
-			while number != 0:
+			bool1 = True
+			while number != 0 and bool1:
 				if any(letter in self.letterLocs.keys() for letter in self.map[i]):
 					letterLocs[letter].append(i.find(letter))
 					number -= 1
-				else: break
+				else: bool1 = False
 
 	def findNext(self, target):
 		target = self.string[target]
