@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 def maxPrice():
 	stream = request.get_json(force=True) 
 	result = []
+	return stream
 	for prices in stream:
 		result.append([])
 		for price in prices:
