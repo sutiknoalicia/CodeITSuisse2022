@@ -22,10 +22,10 @@ def maxPrice():
 		if price[...] == 1 or price[...] == 2:
 			price[...] = 4
 		else:
-			temp = price
+			temp = price[...]
 			while price[...] != 1:
-				if price > temp:
-					temp = price
+				if price[...] > temp:
+					temp = price[...]
 				price[...] = hailstone(price[...])
 			price[...] = temp
 	
