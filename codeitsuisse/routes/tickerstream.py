@@ -45,16 +45,16 @@ def to_cumulative():
 				Timestamps[temp.timestamp] = [temp]
 		for key, tickers in Timestamps.items():
 			result.append(str(key.time())[0:5])
-    			tickers.sort()
+				tickers.sort()
 
-    			for ticker in tickers:
-      				if ticker.ticker not in tickerDict.keys():
-        				result[-1] += f",{ticker.ticker},{ticker.quantity},{ticker.price}"
-      				else:
-        				tickerDict[ticker.ticker][0] += ticker.quantity
-        				tickerDict[ticker.ticker][1] += ticker.price
-        				result[-1] = f"{str(key.time())[0:5]},{ticker.ticker},{tickerDict[ticker.ticker][0]},{tickerDict[ticker.ticker][1]}"
-      				tickerDict[ticker.ticker] = [ticker.quantity, ticker.price]
+				for ticker in tickers:
+					if ticker.ticker not in tickerDict.keys():
+						result[-1] += f",{ticker.ticker},{ticker.quantity},{ticker.price}"
+					else:
+						tickerDict[ticker.ticker][0] += ticker.quantity
+						tickerDict[ticker.ticker][1] += ticker.price
+						result[-1] = f"{str(key.time())[0:5]},{ticker.ticker},{tickerDict[ticker.ticker][0]},{tickerDict[ticker.ticker][1]}"
+					tickerDict[ticker.ticker] = [ticker.quantity, ticker.price]
 				
 		return jsonify({"output" : result})
 		raise Exception
