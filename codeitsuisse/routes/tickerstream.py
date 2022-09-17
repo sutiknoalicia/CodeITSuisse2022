@@ -43,8 +43,8 @@ def to_cumulative():
 				Timestamps[temp.timestamp] += [temp]
 			else:
 				Timestamps[temp.timestamp] = [temp]
-		  for key, tickers in Timestamps.items():
-    			result.append(str(key.time())[0:5])
+		for key, tickers in Timestamps.items():
+			result.append(str(key.time())[0:5])
     			tickers.sort()
 
     			for ticker in tickers:
