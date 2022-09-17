@@ -5,7 +5,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-import this
 import numpy as np
 
 def partition5(l):
