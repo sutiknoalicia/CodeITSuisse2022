@@ -1,3 +1,9 @@
+from flask import Flask, jsonify, request
+from codeitsuisse import app
+import json
+import logging
+logger = logging.getLogger(__name__)
+
 def EuclieanDistance(initial, target):
     x1, y1 = initial
     x2, y2 = target
