@@ -1,9 +1,3 @@
-from flask import Flask, jsonify, request
-from codeitsuisse import app
-import json
-import logging
-logger = logging.getLogger(__name__)
-
 def EuclieanDistance(initial, target):
     x1, y1 = initial
     x2, y2 = target
@@ -14,29 +8,27 @@ class Robot():
 		self.map = mapData
 		self.location = None
 		for i in range(0, len(mapData)):
-			self.location = (i, mapData[i].find("X"))
-			break
+			if (mapData[i].find("X")) != -1:
+				self.location = (i, mapData[i].find("X"))
+				break
 		self.letterLocs = {
-			"c" : [],
-			"o" : [],
-			"d" : [],
-			"e" : [],
-			"i" : [],
-			"t" : [],
-			"s" : [],
-			"u" : [],
+			"C" : [],
+			"O" : [],
+			"D" : [],
+			"E" : [],
+			"I" : [],
+			"T" : [],
+			"S" : [],
+			"U" : [],
 		}
-		self.string = "codeitsuisse"
+		self.string = "CODEITSUISSE"
 
 	def findLetterLocations(self):
-		number = 13
-		for i in range(0, len(self.map)):
-			bool1 = True
-			while number != 0 and bool1:
-				if any(letter in self.letterLocs.keys() for letter in self.map[i]):
-					letterLocs[letter].append(i.find(letter))
-					number -= 1
-				else: bool1 = False
+		for idx1, i1 in enumerate(self.map):
+			for idx2, i2 in enumerate(i1):
+				if i2 in self.letterLocs.keys():
+					self.letterLocs[i2].append((idx1, idx2))
+
 
 	def findNext(self, target):
 		original = target
@@ -44,7 +36,6 @@ class Robot():
 		distances = []
 		for i in self.letterLocs[target]:
 			distances.append(EuclieanDistance(self.location, i))
-		if len(distances) == 0: return
 		distance, idx = min((distance, idx) for (idx, distance) in enumerate(distances))
 		return self.letterLocs[target][idx]
 
@@ -54,10 +45,10 @@ class Robot():
 			coordinates = self.findNext(i)
 			if coordinates:
 				newPath = tuple(map(lambda i, j: i - j, self.location, coordinates))
-				if newPath[0] > 0: path += newPath[0] * "S"
-				else: path += "LL" + newPath[0] * "S"
 				if newPath[1] > 0: path += "R"
+				elif newPath[1] == 0: pass
 				else: path += "L"
+				path += newPath[0] * "S"
 				path += "P"
 		return path
 
@@ -71,5 +62,5 @@ def main():
 	bot = Robot(Map)
 
 	bot.findLetterLocations()
-	
-	return (bot.letterLocs)
+
+	return (bot.pathFind())
